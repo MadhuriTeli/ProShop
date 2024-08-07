@@ -4,9 +4,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { Row, Col,Card, ListGroup, Image, Form, Button } from "react-bootstrap";
 import { FaTrash } from "react-icons/fa";
 import Message from "../components/Message";
-import { addToCart } from "../slices/cartSlice";
+import { addToCart, removeFromCart } from "../slices/cartSlice";
 
-const CartSceen = () => {
+const CartScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
@@ -15,6 +15,14 @@ const CartSceen = () => {
   const addToCartHandler = async (product, qty) =>{
     dispatch(addToCart({...product, qty}));
   };
+
+  const removeFromCartHandler = async (id) =>{
+    dispatch(removeFromCart(id));
+  };
+
+  const checkoutHandler = () =>{
+    navigate('/login?redirect=/shipping');
+  }
 
   return (
     <Row >
@@ -27,7 +35,7 @@ const CartSceen = () => {
       ) : (
         <ListGroup variant="flush">
           {cartItems.map((item) => (
-            <ListGroup.Item key={item.id}>
+            <ListGroup.Item key={item._id}>
               <Row>
                 <Col md={2}>
                   <Image src={item.image} alt={item.name} fluid rounded />
@@ -50,7 +58,7 @@ const CartSceen = () => {
                   </Form.Control>
                 </Col>
                 <Col md={2}>
-                  <Button type="button" variant="light">
+                  <Button type="button" variant="light" onClick={()=> removeFromCartHandler(item._id)}>
                     <FaTrash />
                   </Button>
                 </Col>
@@ -72,7 +80,7 @@ const CartSceen = () => {
         
             </ListGroup.Item>
             <ListGroup.Item>
-                <Button type="button" className="btn-block" disabled={cartItems.length === 0}>Proceed To Checkout</Button>
+                <Button type="button" className="btn-block" disabled={cartItems.length === 0} onClick={checkoutHandler}>Proceed To Checkout</Button>
             </ListGroup.Item>
         </ListGroup>
       </Card>
@@ -81,4 +89,4 @@ const CartSceen = () => {
   );
 };
 
-export default CartSceen;
+export default CartScreen;

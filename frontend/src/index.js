@@ -9,7 +9,7 @@ import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import store from './store';
 import {Provider} from 'react-redux';
-import CartSceen from './screens/CartSceen';
+import CartSceen from './screens/CartScreen';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 const router = createBrowserRouter(
